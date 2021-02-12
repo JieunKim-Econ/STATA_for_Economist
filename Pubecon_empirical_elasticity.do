@@ -28,23 +28,12 @@ save "cepr_march_all.dta", replace
 **************************
 use "cepr_march_all.dta", clear
 
-* Restrict the sample to married couples only, "œ"= OR
-* Hint: "labelbook hhrel2"
+* Restrict the sample to married couples only, "|"= OR
+* Refer to "labelbook hhrel2"
 keep if hhrel2 == 1 | hhrel2 == 2 
 
 * count the number of members in a household and drop singles or 
 * married households whose spouse is not present in the data set
-
-/* It turns out that some versions of Stata do not allow you to 
-use command COUNT on a string variable (i.e. a variable that is 
-a text as opposed to a number). In our case, hhseq is in fact a string variable. 
-To overcome this issue, convert hhseq to a real number by running
-
-generate hhseq2 = real(hhseq)
-
-and proceed using hhseq2 instead of hhseq.
-
-*/
 
 sort year hhseq
 egen count = count(hhseq), by(year hhseq)
